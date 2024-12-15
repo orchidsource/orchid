@@ -271,3 +271,9 @@
 [submodule "liboqs"]
 	path = lib-protocol/liboqs
 	url = https://github.com/open-quantum-safe/liboqs.git
+[submodule "risc0"]
+	path = eth-sender/risc0
+	url = https://github.com/risc0/risc0.git
+[submodule "risc0-ethereum"]
+	path = eth-sender/risc0-ethereum
+	url = https://github.com/risc0/risc0-ethereum.git

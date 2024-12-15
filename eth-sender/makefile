@@ -36,6 +36,11 @@ cflags += -I$(pwd)/source
 checks/$(pwd)/source/main.cpp += -bugprone-unchecked-optional-access
 
 $(call include,lib/target.mk)
+
+linked += $(pwd)/riscy/librust.a
+cflags += -I$(pwd)/riscy
+$(call depend,$(pwd)/riscy/librust.a,$(pwd)/riscy/riscy.rs)
+
 include env/output.mk
 
 $(output)/%/cj$(exe): $(patsubst %,$(output)/$$*/%,$(object) $(linked))

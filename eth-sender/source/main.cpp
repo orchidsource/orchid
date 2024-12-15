@@ -40,6 +40,7 @@
 #include "local.hpp"
 #include "nested.hpp"
 #include "pricing.hpp"
+#include "riscy.hpp"
 #include "segwit.hpp"
 #include "signed.hpp"
 #include "sleep.hpp"
@@ -1082,12 +1083,51 @@ task<void> CommandEvm(Args &args) {
     co_return co_await CommandChain(command, args, chain_);
 }
 
+task<void> CommandRisc0(Args &args) {
+    if (const auto command(args()); false) {
+
+    } else if (command == "execute") {
+        const auto [elf_path, input] = Options<std::string, Bytes>(args);
+        const auto elf(Load(elf_path));
+        std::string journal;
+        riscy_execute(reinterpret_cast<const uint8_t *>(elf.data()), elf.size(), input.data(), input.size(), &riscy_Output_string, &journal);
+        std::cout << Strung(journal).hex(true) << std::endl;
+
+    } else if (command == "image") {
+        const auto [path] = Options<std::string>(args);
+        const auto elf(Load(path));
+        Bytes32 image;
+        riscy_image(reinterpret_cast<const uint8_t *>(elf.data()), elf.size(), image.data());
+        std::cout << image.hex(true) << std::endl;
+
+    } else if (command == "prove") {
+        const auto [receipt_path, elf_path, input] = Options<std::string, std::string, Bytes>(args);
+        const auto elf(Load(elf_path));
+        std::string receipt;
+        riscy_prove(reinterpret_cast<const uint8_t *>(elf.data()), elf.size(), input.data(), input.size(), &riscy_Output_string, &receipt);
+        Save(receipt_path, receipt);
+
+    } else if (command == "verify") {
+        const auto [path, image] = Options<std::string, Bytes32>(args);
+        const auto receipt(Load(path));
+        std::string journal;
+        riscy_verify(reinterpret_cast<const uint8_t *>(receipt.data()), receipt.size(), image.data(), &riscy_Output_string, &journal);
+        std::cout << Strung(journal).hex(true) << std::endl;
+
+    } else orc_assert_(false, "unknown command " << command);
+
+    co_return;
+}
+
 task<void> CommandMain(Args &args) {
     const auto command(args());
     if (false) {
 
     } else if (command == "evm") {
         co_return co_await CommandEvm(args);
+
+    } else if (command == "risc0") {
+        co_return co_await CommandRisc0(args);
 
     } else co_return co_await Command(command, args);
 }
