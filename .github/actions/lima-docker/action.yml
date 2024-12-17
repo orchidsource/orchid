@@ -3,7 +3,7 @@ runs:
   steps:
     - run: brew install docker lima
       shell: bash
-    - run: limactl start template://docker
+    - run: limactl start template://docker --arch=x86_64
       shell: bash
     - run: docker context create lima-docker --docker "host=unix://${HOME}/.lima/docker/sock/docker.sock"
       shell: bash

@@ -353,7 +353,7 @@ jobs:
 
   build-lnx-mac:
     needs: [cache-submodule]
-    runs-on: macos-13
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -363,7 +363,7 @@ jobs:
     - uses: ./.github/actions/nerdctl
     - run: env/setup-ndk.sh
 
-    - run: gmake -j3 -C srv-daemon target=lnx
+    - run: gmake -j3 -C srv-daemon target=lnx machine=x86_64
 
     - uses: actions/upload-artifact@v4
       with:

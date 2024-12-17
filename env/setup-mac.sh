@@ -17,6 +17,7 @@ brew install \
     autoconf{,-archive} automake libtool \
     make ninja pkg-config \
     cmake meson \
+    qemu \
     rustup-init \
 
 rustup-init -y --no-modify-path --no-update-default-toolchain
