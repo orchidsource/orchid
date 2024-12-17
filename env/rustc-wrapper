@@ -4,10 +4,12 @@ set -e
 # XXX: this only exists due to this Cargo bug :(
 # https://github.com/rust-lang/cargo/issues/8140
 
+# XXX: well, I also mix in the project name now?
+
 file=
 for arg in "$@"; do
     if [[ ${arg} == ${CARGO_HOME}/* && -z ${file} ]]; then
-        file=${arg##${CARGO_HOME}}
+        file=${ENV_RUST}/${arg##${CARGO_HOME}/}
     fi
 done
 

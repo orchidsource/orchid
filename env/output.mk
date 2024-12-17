@@ -175,8 +175,10 @@ $(output)/%/librust.a: $$(specific) $$(folder)/Cargo.toml $(output)/rustup-targe
 	@# or if using rustc: rustc --version --verbose | sed -e '/^host: /!d;s///'
 	
 	@# https://github.com/buildroot/buildroot/commit/4b2be770b8a853a7dd97b5788d837f0d84923fa1
-	cd $(folder) && RUST_BACKTRACE=1 $(rust):$(dir $(word 1,$(cc))) \
-	    $(ccrs)_CC='$(cc) $(more/$(arch)) $(qflags)' $(ccrs)_AR='$(ar/$(arch))' \
+	cd $(folder) && ENV_RUST=$(notdir $(folder)) RUST_BACKTRACE=1 $(rust):$(dir $(word 1,$(cc))) \
+	    $(ccrs)_CC='$(cc) $(more/$(arch))' $(ccrs)_CFLAGS='$(qflags)' \
+	    $(ccrs)_CXX='$(cxx) $(more/$(arch))' $(ccrs)_CXXFLAGS='$(qflags) $(xflags)' \
+	    $(ccrs)_AR='$(ar/$(arch))' \
 	    PKG_CONFIG_ALLOW_CROSS=1 PKG_CONFIG="$(CURDIR)/env/pkg-config.sh" ENV_ARCH="$(arch)" \
 	    CARGO_HOME='$(call path,$(CURDIR)/$(output)/cargo)' CARGO_INCREMENTAL=0 \
 	    __CARGO_TEST_CHANNEL_OVERRIDE_DO_NOT_USE_THIS=nightly CARGO_TARGET_APPLIES_TO_HOST=false \
@@ -185,7 +187,7 @@ $(output)/%/librust.a: $$(specific) $$(folder)/Cargo.toml $(output)/rustup-targe
 	    cargo +$(rustc) build --verbose --lib --release --features "$(features/$(folder))" \
 	        --target $(triple/$(arch)) -Z target-applies-to-host \
 	        --target-dir $(call path,$(CURDIR)/$(output)/$(arch)/$(folder))
-	cp -f $(output)/$(arch)/$(folder)/$(triple/$(arch))/release/deps/lib$(subst -,_,$(notdir $(folder))).a $@
+	cp -f $(output)/$(arch)/$(folder)/$(triple/$(arch))/release/lib$(subst -,_,$(notdir $(folder))).a $@
 
 .PHONY: clean
 clean:

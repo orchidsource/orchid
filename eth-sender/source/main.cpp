@@ -40,6 +40,7 @@
 #include "local.hpp"
 #include "nested.hpp"
 #include "pricing.hpp"
+#include "riscy.hpp"
 #include "segwit.hpp"
 #include "signed.hpp"
 #include "sleep.hpp"
@@ -286,6 +287,19 @@ static Locator _(std::string_view arg) {
     else if (arg == "ganache")
         arg = "http://127.0.0.1:7545/";
     return arg;
+} };
+
+template <>
+struct Option_<riscy_Level> {
+static riscy_Level _(std::string_view arg) {
+    if (false);
+    else if (arg == "composite")
+        return riscy_Level::COMPOSITE;
+    else if (arg == "succinct")
+        return riscy_Level::SUCCINCT;
+    else if (arg == "groth16")
+        return riscy_Level::GROTH16;
+    else orc_assert_(false, "unknown level " << arg);
 } };
 
 template <>
@@ -1082,12 +1096,85 @@ task<void> CommandEvm(Args &args) {
     co_return co_await CommandChain(command, args, chain_);
 }
 
+task<void> CommandRisc0(Args &args) {
+    if (const auto command(args()); false) {
+
+    } else if (command == "image") {
+        const auto elf(Load(Option<std::string>(args())));
+        Options<>(args);
+        Bytes32 image;
+        riscy_image(elf, image.data());
+        std::cout << image.hex(true) << std::endl;
+
+    } else if (command == "execute") {
+        const auto elf(Load(Option<std::string>(args())));
+        std::vector<std::string> assumptions;
+        std::vector<std::string> arguments;
+        while (!args.empty())
+            if (auto arg = args(); arg != "--")
+                assumptions.emplace_back(args());
+            else {
+                while (!args.empty())
+                    arguments.emplace_back(args());
+                break;
+            }
+        Options<>(args);
+        std::string journal;
+        riscy_execute(elf, assumptions, arguments, &riscy_Output_string, &journal);
+        std::cout << Strung(journal).hex(true) << std::endl;
+
+    } else if (command == "prove") {
+        const auto level(Option<riscy_Level>(args()));
+        const auto receipt_path(Option<std::string>(args()));
+        const auto elf(Load(Option<std::string>(args())));
+        std::vector<std::string> assumptions;
+        std::vector<std::string> arguments;
+        while (!args.empty())
+            if (auto arg = args(); arg != "--")
+                assumptions.emplace_back(args());
+            else {
+                while (!args.empty())
+                    arguments.emplace_back(args());
+                break;
+            }
+        Options<>(args);
+        std::string receipt;
+        riscy_prove(level, elf, assumptions, arguments, &riscy_Output_string, &receipt);
+        Save(receipt_path, receipt);
+
+
+    } else if (command == "compress") {
+        const auto level(Option<riscy_Level>(args()));
+        const auto receipt_path(Option<std::string>(args()));
+        const auto assumption(Load(Option<std::string>(args())));
+        Options<>(args);
+        std::string receipt;
+        riscy_compress(level, assumption, &riscy_Output_string, &receipt);
+        Save(receipt_path, receipt);
+
+    } else if (command == "verify") {
+        const auto image(Option<Bytes32>(args()));
+        const auto assumption(Load(Option<std::string>(args())));
+        Options<>(args);
+        std::string journal;
+        riscy_verify(image.data(), assumption, &riscy_Output_string, &journal);
+        std::cout << Strung(journal).hex(true) << std::endl;
+
+
+    } else orc_assert_(false, "unknown command " << command);
+
+    co_return;
+}
+
 task<void> CommandMain(Args &args) {
     const auto command(args());
     if (false) {
 
     } else if (command == "evm") {
         co_return co_await CommandEvm(args);
+
+    } else if (command == "risc0") {
+        co_return co_await CommandRisc0(args);
 
     } else co_return co_await Command(command, args);
 }
