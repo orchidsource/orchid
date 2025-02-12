@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Orchid Accounts - Orchid</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Orchid Accounts";
+    var mkdocs_page_input_path = "accounts.md";
+    var mkdocs_page_url = "/accounts/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Orchid</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Orchid Accounts</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#how-orchids-layer-2-works">How Orchid’s Layer 2 Works</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#accounts">Accounts</a></li>
+        
+            <li><a class="toctree-l3" href="#how-to-get-an-orchid-account">How to get an Orchid account</a></li>
+        
+            <li><a class="toctree-l3" href="#orchid-account-efficiency">Orchid account efficiency</a></li>
+        
+            <li><a class="toctree-l3" href="#deposit">Deposit</a></li>
+        
+            <li><a class="toctree-l3" href="#balance">Balance</a></li>
+        
+            <li><a class="toctree-l3" href="#technical-parts-of-an-orchid-account">Technical parts of an Orchid account</a></li>
+        
+            <li><a class="toctree-l3" href="#orchid-account-troubleshooting">Orchid Account Troubleshooting</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../using-orchid/">The Orchid Client</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../orchid-dapp/">The Orchid DApp</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../faq/">FAQ</a>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Orchid</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Orchid Accounts</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="how-orchids-layer-2-works">How Orchid’s Layer 2 Works</h1>
+<h2 id="accounts">Accounts</h2>
+<p>Orchid accounts are the center of Orchid’s "probabilistic rollup" layer 2, which enables a stream of tiny payments to be sent from the account owner to a provider for services. A major design goal of the layer 2 is to make it possible to send the absolute smallest payments theoretically possible.</p>
+<p>Users can move funds from any layer 1 blockchain that has the <a href="https://github.com/OrchidTechnologies/orchid/blob/30f287f6e8da10c8f8a79d89900ba23736ff847d/lot-ethereum/lottery1.sol">Lottery contract</a> successfully deployed onto the Orchid layer 2 using <a href="https://account.orchid.com">Orchid's dapp</a>. Moving funds into and out of an Orchid account is similar to a layer 2 bridge - users move funds from their attached wallet into a smart contract that governs the rules of the layer 2 and can move funds back out to their attached wallet.</p>
+<p>Unlike many other layer 2 solutions, Orchid utilizes two sets of keys to manage a single Orchid account. There is the funder wallet, which is the layer 1 wallet that attaches to the dapp to move funds into the account and the Orchid L2 keys, which is a second keypair that can be used to spend funds from the L2 account. The Orchid dapp asks for the "Orchid Identity" which is in reference to the L2 keys. As of now, the L2 keys can be generated in the Orchid app or could be generated by hand.</p>
+<p>Many blockchains that Orchid is running on today do not properly support the methods needed to scan for accounts. That means that to specify and use an Orchid account, both the L1 address (the funder wallet address) and the L2 address (the "Orchid Identity") must be specified along with the L1 blockchain in order to find the account. </p>
+<p>The Orchid Lottery contract is deployed as a singleton at this address: 0x6db8381b2b41b74e17f5d4eb82e8d5b04dda0a82</p>
+<h2 id="how-to-get-an-orchid-account">How to get an Orchid account</h2>
+<ul>
+<li>Purchase an account (iOS/macOS/Android only feature) funded by Orchid</li>
+<li>Create L2 keys in the app and <a href="https://docs.orchid.com/en/latest/orchid-dapp/#creating-an-account">fund</a> your own Orchid account using the Orchid dApp</li>
+<li>Have an account L2 key shared with you (depending on the blockchain, you may also need the funder wallet address)</li>
+</ul>
+<h3 id="a-note-on-purchased-orchid-accounts-iosmacosandroid">A Note on Purchased Orchid accounts (iOS/macOS/Android)</h3>
+<p>In the Orchid Android, iOS and macOS apps, it is possible to simply purchase an Orchid account from Orchid Labs with prepaid access credits using an in-app purchase. These are distinct from Orchid accounts created in the dApp and have the following properties:</p>
+<ul>
+<li>Purchased accounts connect only to <a href="https://www.orchid.com/preferredproviders">preferred providers</a> for VPN service.</li>
+<li>It is not possible to transfer the crypto out of a purchased Orchid account in the same way as an account created in the dApp.</li>
+<li>Accounts are created on the Gnosis blockchain and are denominated in the xDAI stablecoin.</li>
+</ul>
+<p>Orchid takes your in-app purchase funds and adds the equivalent xDAI to the selected Orchid address on the xDAI blockchain. Your balance and deposit will increase by the amount of USD purchased.</p>
+<h2 id="orchid-account-efficiency">Orchid account efficiency</h2>
+<p>Orchid’s nanopayments work on a simple principle: instead of giving your provider $1 one hundred times, it’s better for you to give them 100 scratch-off tickets with a 1% chance of winning $100. That way, even though the provider still receives $100 on average, you only pay for one transaction, instead of one hundred. The transmitted value is determined by comparing the amount of the total ticket value to the value lost to transaction fees; if your ticket was worth $100 and the L1 network fees to process the transaction cost $10, your ticket has a 90% efficiency to the provider.</p>
+<p>When the efficiency of an account drops below 0%, providers will no longer accept payments from that account, because the network fees are greater than the amount of value they could receive from a winning ticket. </p>
+<p>There are two major factors that affect efficiency:</p>
+<ul>
+<li>The size of the deposit, which determines the face value of the tickets</li>
+<li>The network fees for the L1 blockchain that houses the account at a given moment</li>
+</ul>
+<h3 id="efficiency-example">Efficiency example</h3>
+<p>Imagine an Orchid account with a 10 xDAI deposit. The account will issue tickets with a maximum 5 xDAI face value; therefore, providers get a tiny chance at “winning” a maximum 5xDAI with each ticket they accept for service. Providers must pay the network fee to claim the 5 xDAI; so, the provider queries the current L1 network fee and makes sure the fee is not greater than 5 xDAI. When the network fees the provider pays to claim the fees are greater than 5 xDAI ticket value, the provider does not accept payments from that account, as that account has a &lt;0% efficiency. Typically you want the face value to be 20X the network fee, which would roughly result in 5% L1 fees being paid or 95% efficiency. </p>
+<h2 id="deposit">Deposit</h2>
+<p>The deposit is required to accept service and is verified by providers. The deposit prevents double spending, and in general, the deposit maintains good standing on the network.</p>
+<p>The size of the deposit determines the maximum face value of the tickets sent from the user to the provider. The face value refers to the amount of funds that a provider claims when they receive a winning ticket; currently, the face value is set to half the value of the deposit.</p>
+<p>When an Orchid account is funded, the deposit is “locked” and cannot be withdrawn from the account until it is “unlocked” and the requisite 24-hour cool-off period has passed.</p>
+<h3 id="size-of-deposit">Size of deposit</h3>
+<p>Market conditions are constantly changing, which includes fluctuations in network fees. When the account efficiency gets low, it is a good idea to add additional funds to your deposit to increase the efficiency. We recommend a minimum deposit that sets your ticket value to 90% efficiency; consult our <a href="https://account.orchid.com/widget">chart</a> for more information on recommended deposit amounts.</p>
+<h2 id="balance">Balance</h2>
+<p>The balance of the Orchid account is the amount of currency held to pay providers. When the account is in use, the tickets are backed by funds in the balance. When a ticket “wins”, the face value of the ticket is withdrawn from the user’s account balance and deposited into the provider’s account with an on-chain transaction. The Lottery contract governs this behavior. </p>
+<p>As a practical matter, a user's balance will remain unchanged for long periods of time; this is because you can sometimes receive significant amounts of service before a payment ticket “wins”, funds are claimed, and your balance is adjusted.</p>
+<p>It is useful to think of Orchid account balances as a number of maximum sized tickets. So if the account’s deposit size is 10 xDAI, and there is 15 xDAI in the balance, because the size of each ticket is 5 xDAI (deposit / 2) there are 3 tickets worth of balance (total balance / ticket size).</p>
+<p>The dApp has an <a href="https://docs.orchid.com/en/latest/orchid-dapp/#add-funds-tab">Add Funds</a> screen to add additional balance to your account.</p>
+<h3 id="tickets">Tickets</h3>
+<p>A ticket is a nanopayment sent from a user to a provider to pay for service. The ticket has a probability of winning along with a face value, which is the amount of currency the provider receives if the ticket “wins”.</p>
+<p>The face value of a ticket is set at half of the deposit in the Orchid account. While this is hard coded in the app right now, in the future the face value of tickets could vary, depending on market conditions and to optimize for variance. However, the upper limit of ticket size is governed by the deposit, and the max ticket size is always half of the deposit.</p>
+<p>Orchid accounts with very few tickets will experience a high amount of variance due to the nature of probability.</p>
+<h3 id="variance">Variance</h3>
+<p>There is an important concept to consider when using Orchid: <em>variance</em>. Since tickets have a probability of a win, it is possible that a winning ticket will be claimed either faster or slower than is expected.</p>
+<p>For a quick example, imagine you have an Orchid account with one ticket worth of balance. As you start using the service, you get “unlucky”, and a winning ticket is issued immediately; your balance then goes to zero, and you will need to add funds. This is an example of not getting what you expect due to variance. The inverse can also happen: that is, you may receive much more service than expected because your winning ticket is not getting pulled.</p>
+<p>To combat variance, Orchid accounts need more tickets worth of service. That way, the probability of a winning ticket being issued before or after you would expect is mitigated. As of now, Orchid recommends at least four tickets worth of service in your account balance.</p>
+<h2 id="technical-parts-of-an-orchid-account">Technical parts of an Orchid account</h2>
+<p>The makeup of an Orchid account is important for understanding how to manage it, and how the different components work together. Ultimately, the technical details of the account are dictated by the nanopayment smart contract, which holds the funds and allows users to interact with their accounts.</p>
+<h3 id="the-orchid-funder-wallet">The Orchid funder wallet</h3>
+<p>The funder wallet is a blockchain address that corresponds to the wallet address that funded the account. The owner of that wallet has complete control over the Orchid account and can add or remove funds, along with all the other operations available in the Orchid account manager.</p>
+<p>Simply put, the funder wallet is the custodian of the Orchid account. Without the keys to the funder wallet, no functions can be performed on the account, such as adding/removing funds, unlocking/locking the deposit and moving funds between balance and deposit.</p>
+<p>If the keys to a funder wallet are lost, the associated Orchid account will still function, but the user cannot add funds, remove funds or make any changes to the account. You will be able to use the account while it’s efficiency is above 0%, until the balance is reduced to zero. If the deposit is lost, and the account efficiency drops below 0%, there is no way to add to the deposit.</p>
+<h3 id="the-orchid-address-and-key">The Orchid address and key</h3>
+<p>An Orchid account utilizes its own keypair besides the layer 1 funder wallet address: the layer 2 "Orchid identity" keypair.</p>
+<p>The public portion of the keypair is the address used when funding the Orchid account. In the Orchid dApp, the address is required before an Orchid account can be funded; you can copy your Orchid identity in the app, and paste that in the Orchid identity field in the dApp to create an account.</p>
+<p>The private portion of the key or “secret” is used by the client to sign tickets. The key is therefore a core technical property of the Orchid account; it is the important bit of information that is shared when an Orchid account is shared between people or devices.</p>
+<p>The keypair is generated in the app. To create a new keypair, go to “Manage Accounts”, tap on the cog wheel, and select “New Identity”. The Orchid address will be displayed next to an identicon and can be copied over to the dApp to add an Orchid account to this address. Then, you can export the key by selecting “Export Identity” and have access to any accounts with that address.</p>
+<p>A keypair can also be manually generated and used with Orchid.</p>
+<h3 id="sharing-orchid-accounts">Sharing Orchid accounts</h3>
+<p>There’s no limit to the number of people or devices that a single Orchid account can be shared with. The account is specified by the L1 funder wallet address, the L2 identity key, and the chain the account is funded on. To share an account, go to “Manage Accounts”, tap on the cog wheel, and select “Export Identity”. A QR code encoding this information will appear, as well as a Copy button. The account information is displayed under the QR code, and can be copied and directly pasted into the client app as text. Also note the L1 chain the account was funded upon; as Orchid has expanded to multiple partnerships with chains, the functionality to automatically determine the originating chain for each wallet has encountered difficulties. So, to share accounts, it is important to select the correct chain to properly access the Orchid account.</p>
+<h2 id="orchid-account-troubleshooting">Orchid Account Troubleshooting</h2>
+<h3 id="deposit-size-too-small">Deposit size too small</h3>
+<p>Both the Orchid client app and the Orchid web dApp will display a warning when the Orchid account efficiency or balance is too low for usage. There are a few solutions when you see this error:</p>
+<p>For in-app purchased accounts (Android/iOS/macOS only feature): Tap on the warning to go into the selected account. Simply use “Add Credit” to increase the balance and deposit with an in-app purchase. Do not try to fix purchased accounts in the dApp; only manage purchased accounts using in-app purchases.</p>
+<p>For Orchid accounts created with the dApp: The Orchid dApp can add funds to the account’s deposit, which will improve the Orchid account efficiency and eliminate the warning, allowing the app to start working. To add funds, connect the funder wallet used to create the Orchid account and click on the “Add Funds” tab.</p>
+<h3 id="what-is-the-difference-between-balance-and-deposit-in-my-orchid-account">What is the difference between Balance and Deposit in my Orchid Account?</h3>
+<p>The <a href="https://docs.orchid.com/en/latest/accounts/#balance">balance</a> is the collateral for the tickets sent from the user to the provider. Over time, as winning tickets are issued from your Orchid app, the Orchid account balance will decrease. The <a href="https://docs.orchid.com/en/latest/accounts/#deposit">deposit</a> is the Orchid token held in escrow; this amount never depletes and can be withdrawn after the 24-hour "unlock" period.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../using-orchid/" class="btn btn-neutral float-right" title="The Orchid Client">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../using-orchid/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
+
+</body>
+</html>
