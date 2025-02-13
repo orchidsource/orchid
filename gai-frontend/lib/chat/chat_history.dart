@@ -21,7 +21,7 @@ class ChatHistory {
     _messages.clear();
   }
 
-  // Return the client and provider messages, optionally limited to the specifid model id.
+  // Return the client and provider messages, optionally limited to the specified model id.
   // System and internal messages are always excluded.
   List<ChatMessage> getConversation({String? withModelId}) {
     return _messages

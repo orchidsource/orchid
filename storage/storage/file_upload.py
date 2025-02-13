@@ -118,7 +118,7 @@ class FileUpload:
 
     @staticmethod
     # Create a map that assigns each server a list of shards to upload.
-    # Shards are assigned round-robbin to servers that do not already have them.
+    # Shards are assigned round-robin to servers that do not already have them.
     def assign_shards_to_servers(
             providers_list, server_file_status_map, upload0, upload1) -> dict[Server, tuple[list[int], list[int]]]:
 

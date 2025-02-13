@@ -104,7 +104,7 @@ class ScopedSetTrue {
   bool* value_;
 };
 
-// Returns true if the experiement "WebRTC-SCM-Timestamp" is explicitly
+// Returns true if the experiment "WebRTC-SCM-Timestamp" is explicitly
 // disabled.
 bool IsScmTimeStampExperimentDisabled() {
   return webrtc::field_trial::IsDisabled("WebRTC-SCM-Timestamp");
@@ -481,7 +481,7 @@ int LwipSocket::DoReadFromSocket(void* buffer,
     }
     received = ::lwip_recvmsg(s_, &msg, 0);
     if (received <= 0) {
-      // An error occured or shut down.
+      // An error occurred or shut down.
       return received;
     }
     if (timestamp) {

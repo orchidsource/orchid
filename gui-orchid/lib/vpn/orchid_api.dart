@@ -58,7 +58,7 @@ abstract class OrchidAPI {
   /// specified by its configuration file.
   Future<void> setVPNExtensionEnabled(bool enabled);
 
-  /// The the base path for files shared between the UI and VPN extension.
+  /// The base path for files shared between the UI and VPN extension.
   /// e.g. groupContainerPath() + '/analysis.db'
   Future<String> groupContainerPath();
 
